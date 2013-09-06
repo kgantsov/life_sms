@@ -141,7 +141,12 @@ class LifeSms(object):
         """
 
         status = {}
-        response_xml = etree.XML(response_content)
+        try:
+            response_xml = etree.XML(response_content)
+        except etree.XMLSyntaxError as error:
+            raise exceptions.XMLException(
+                "Error parsing status response XML: %s" % error
+            )
 
         if mode == 'single':
             if 'id' in response_xml.attrib:
@@ -166,6 +171,9 @@ class LifeSms(object):
                         statuses.append(item.text)
                 status['statuses'] = zip(ids, statuses, errors)
         elif mode == 'individual':
+            if 'groupid' in response_xml.attrib:
+                status['groupid'] = response_xml.attrib['groupid']
+
             for item in response_xml:
                 status[item.tag] = item.text
 
