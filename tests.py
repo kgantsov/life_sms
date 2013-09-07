@@ -1,4 +1,7 @@
 import unittest
+from mock import patch
+from mock import ANY
+
 from life_sms import life_sms
 from life_sms import life_sms_exceptions as exceptions
 
@@ -7,15 +10,20 @@ PASSWORD = 'password'
 ALPHA_NAME = 'MyBestCompany'
 
 
+class Response(object):
+    """docstring for Response"""
+    def __init__(self, content):
+        super(Response, self).__init__()
+        self.content = content
+
+
 class LifeSmsTests(unittest.TestCase):
 
     def test_parse_status_response(self):
         """Sending a single SMS with the minimum detail and no errors should
         work.
         """
-        sms = life_sms.LifeSms(
-            LOGIN, PASSWORD, ALPHA_NAME
-        )
+        sms = life_sms.LifeSms(LOGIN, PASSWORD, ALPHA_NAME)
         response_content = '''<?xml version="1.0" encoding="UTF-8"?>
         <status id="8072817" date="Fri, 06 Sep 2013 19:11:16 +0300">
             <state>Accepted</state>
@@ -83,6 +91,43 @@ class LifeSmsTests(unittest.TestCase):
             exceptions.XMLException,
             sms.parse_status_response,
             {response_content: ''}
+        )
+
+    @patch('life_sms.life_sms.requests.post')
+    def test_status(self, patched_obj):
+        sms = life_sms.LifeSms(LOGIN, PASSWORD, ALPHA_NAME)
+        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        <status id="8075969" date="Fri, 06 Sep 2013 21:38:47 +0300">
+            <state>Delivered</state>
+        </status>
+        '''
+        response = Response(response_content)
+        patched_obj.return_value = response
+        status = sms.status('8075969')
+        self.assertEqual(status['id'], '8075969')
+        self.assertEqual(status['status'], 'Delivered')
+        patched_obj.assert_called_with(
+            life_sms.SMS_STATUS_URL,
+            '<request id="8075969">status</request>',
+            headers={'Content-Type': 'text/xml; charset=utf-8'},
+            auth=ANY
+        )
+
+        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        <status id="8072382" date="Fri, 06 Sep 2013 21:38:47 +0300">
+            <state>Rejected</state>
+        </status>
+        '''
+        response = Response(response_content)
+        patched_obj.return_value = response
+        status = sms.status('8072382')
+        self.assertEqual(status['id'], '8072382')
+        self.assertEqual(status['status'], 'Rejected')
+        patched_obj.assert_called_with(
+            life_sms.SMS_STATUS_URL,
+            '<request id="8072382">status</request>',
+            headers={'Content-Type': 'text/xml; charset=utf-8'},
+            auth=ANY
         )
 
 if __name__ == "__main__":

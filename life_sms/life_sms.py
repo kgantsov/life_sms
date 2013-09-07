@@ -30,7 +30,7 @@ class LifeSms(object):
             'single', [message], [phone], start=start, validity=validity
         )
         response = self.__request(SMS_SEND_URL, etree.tostring(sms_data))
-        status = self.parse_status_response(response.content)
+        status = self.parse_status_response(response_content=response.content)
         return status
 
     def send_bulk(
@@ -48,7 +48,7 @@ class LifeSms(object):
             validity=validity
         )
         response = self.__request(SMS_SEND_URL, etree.tostring(sms_data))
-        status = self.parse_status_response(response.content)
+        status = self.parse_status_response(response_content=response.content)
         return status
 
     def send_individual(
@@ -66,7 +66,7 @@ class LifeSms(object):
             validity=validity
         )
         response = self.__request(SMS_SEND_URL, etree.tostring(sms_data))
-        status = self.parse_status_response(response.content)
+        status = self.parse_status_response(response_content=response.content)
         return status
 
     def __build_sms_data(
@@ -130,7 +130,7 @@ class LifeSms(object):
         response = self.__request(
             SMS_STATUS_URL, etree.tostring(status_request)
         )
-        status = self.parse_status_response(response.content)
+        status = self.parse_status_response(response_content=response.content)
         return status
 
     def parse_status_response(self, mode='single', response_content=''):
