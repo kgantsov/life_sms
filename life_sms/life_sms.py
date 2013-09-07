@@ -29,7 +29,6 @@ class LifeSms(object):
         sms_data = self.__build_sms_data(
             'single', [message], [phone], start=start, validity=validity
         )
-        return etree.tostring(sms_data)
         response = self.__request(SMS_SEND_URL, etree.tostring(sms_data))
         status = self.parse_status_response(response.content)
         return status
@@ -48,7 +47,6 @@ class LifeSms(object):
             start=start,
             validity=validity
         )
-        return etree.tostring(sms_data)
         response = self.__request(SMS_SEND_URL, etree.tostring(sms_data))
         status = self.parse_status_response(response.content)
         return status
@@ -67,7 +65,6 @@ class LifeSms(object):
             start=start,
             validity=validity
         )
-        return etree.tostring(sms_data)
         response = self.__request(SMS_SEND_URL, etree.tostring(sms_data))
         status = self.parse_status_response(response.content)
         return status
