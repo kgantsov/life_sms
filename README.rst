@@ -1,6 +1,9 @@
 life_sms
 ========
 
+.. image:: https://travis-ci.org/kgantsov/life_sms.png?branch=master
+    :target: https://travis-ci.org/kgantsov/life_sms
+
 Life Bulk Messaging Solution library
 
 Install
