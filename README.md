@@ -7,7 +7,6 @@ Life Bulk Messaging Solution library
 Requirements
 ============
 
-* `Python <http://www.python.org/>`_ 2.7
 * `Requests <http://docs.python-requests.org/>`
 
 
@@ -38,7 +37,7 @@ Send individual messages:
 
     status = sms.send_individual(
         ['Hello Fill', 'Hello Jhon', 'Hello Kevin'],
-        ['0981233232', '0671234343'],
+        ['0981233232', '0671234343', '0671239898'],
         uniq_key='123456'
     )
 
