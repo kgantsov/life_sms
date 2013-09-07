@@ -33,7 +33,7 @@ class LifeSmsTests(unittest.TestCase):
         """Sending a single SMS with the minimum detail and no errors should
         work.
         """
-        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        response_content = '''<?xml version="1.0"?>
         <status id="8072817" date="Fri, 06 Sep 2013 19:11:16 +0300">
             <state>Accepted</state>
         </status>
@@ -43,7 +43,7 @@ class LifeSmsTests(unittest.TestCase):
         )
         self.assertEqual(status['id'], '8072817')
 
-        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        response_content = '''<?xml version="1.0"?>
         <status date="Fri, 06 Sep 2013 19:11:16 +0300">
             <state error="Invalid message">Accepted</state>
         </status>
@@ -55,7 +55,7 @@ class LifeSmsTests(unittest.TestCase):
         self.assertTrue('error' in status)
         self.assertEqual(status['error'], 'Invalid message')
 
-        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        response_content = '''<?xml version="1.0"?>
         <status groupid="593589" date="Fri, 06 Sep 2013 22:11:05 +0300">
             <id>8076414</id>
             <id>8076415</id>
@@ -73,7 +73,7 @@ class LifeSmsTests(unittest.TestCase):
             [('8076414', 'Accepted', None), ('8076415', 'Accepted', None)]
         )
 
-        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        response_content = '''<?xml version="1.0"?>
         <status groupid="593598" date="Fri, 06 Sep 2013 22:50:17 +0300">
             <state>sent</state>
             <total>2</total>
@@ -104,7 +104,7 @@ class LifeSmsTests(unittest.TestCase):
 
     @patch('life_sms.life_sms.requests.post')
     def test_status(self, patched_obj):
-        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        response_content = '''<?xml version="1.0"?>
         <status id="8075969" date="Fri, 06 Sep 2013 21:38:47 +0300">
             <state>Delivered</state>
         </status>
@@ -121,7 +121,7 @@ class LifeSmsTests(unittest.TestCase):
             auth=ANY
         )
 
-        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        response_content = '''<?xml version="1.0"?>
         <status id="8072382" date="Fri, 06 Sep 2013 21:38:47 +0300">
             <state>Rejected</state>
         </status>
@@ -140,7 +140,7 @@ class LifeSmsTests(unittest.TestCase):
 
     @patch('life_sms.life_sms.requests.post')
     def test_send(self, post_patched):
-        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        response_content = '''<?xml version="1.0"?>
         <status id="8075969" date="Fri, 06 Sep 2013 21:38:47 +0300">
             <state>Accepted</state>
         </status>
@@ -155,7 +155,7 @@ class LifeSmsTests(unittest.TestCase):
 
     @patch('life_sms.life_sms.requests.post')
     def test_send_bulk(self, post_patched):
-        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        response_content = '''<?xml version="1.0"?>
         <status groupid="593589" date="Fri, 06 Sep 2013 22:11:05 +0300">
             <id>8076414</id>
             <id>8076415</id>
@@ -179,7 +179,7 @@ class LifeSmsTests(unittest.TestCase):
 
     @patch('life_sms.life_sms.requests.post')
     def test_send_individual(self, post_patched):
-        response_content = '''<?xml version="1.0" encoding="UTF-8"?>
+        response_content = '''<?xml version="1.0"?>
         <status groupid="593598" date="Fri, 06 Sep 2013 22:50:17 +0300">
             <state>sent</state>
             <total>2</total>
@@ -217,7 +217,7 @@ class LifeSmsTests(unittest.TestCase):
         )
 
         self.assertEqual(
-            etree.tostring(sms_data),
+            etree.tostring(sms_data).decode('utf-8'),
             post_content % (
                 ALPHA_NAME, self.phone, self.message
             )
@@ -228,7 +228,7 @@ class LifeSmsTests(unittest.TestCase):
         )
 
         self.assertEqual(
-            etree.tostring(sms_data),
+            etree.tostring(sms_data).decode('utf-8'),
             post_content % (
                 ALPHA_NAME, '0672345434', 'Hello world message'
             )
@@ -244,7 +244,7 @@ class LifeSmsTests(unittest.TestCase):
         )
 
         self.assertEqual(
-            etree.tostring(sms_data),
+            etree.tostring(sms_data).decode('utf-8'),
             post_content % (
                 ALPHA_NAME,
                 '0981234567',
@@ -270,7 +270,7 @@ class LifeSmsTests(unittest.TestCase):
         )
 
         self.assertEqual(
-            etree.tostring(sms_data),
+            etree.tostring(sms_data).decode('utf-8'),
             post_content % (
                 ALPHA_NAME,
                 '0981234567',

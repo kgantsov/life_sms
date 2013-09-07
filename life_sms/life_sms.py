@@ -7,7 +7,7 @@ from requests.exceptions import RequestException
 
 from lxml import etree
 
-import life_sms_exceptions as exceptions
+from . import life_sms_exceptions as exceptions
 
 SMS_BASE_URL = 'http://api.life.com.ua'
 SMS_STATUS_URL = 'https://api.life.com.ua/ip2sms-request/'
@@ -139,7 +139,7 @@ class LifeSms(object):
         status = self.parse_status_response(response_content=response.content)
         return status
 
-    def parse_status_response(self, mode='single', response_content=''):
+    def parse_status_response(self, mode='single', response_content=u''):
         """Parse the returned XML from life sms server.
         """
 
@@ -172,7 +172,7 @@ class LifeSms(object):
                     elif item.tag == 'state':
                         errors.append(item.attrib.get('error', None))
                         statuses.append(item.text)
-                status['statuses'] = zip(ids, statuses, errors)
+                status['statuses'] = list(zip(ids, statuses, errors))
         elif mode == 'individual':
             if 'groupid' in response_xml.attrib:
                 status['groupid'] = response_xml.attrib['groupid']
@@ -198,7 +198,7 @@ class LifeSms(object):
         try:
             response = requests.post(
                 url,
-                xml,
+                xml.decode('utf-8'),
                 headers=headers,
                 auth=HTTPBasicAuth(self.login, self.password)
             )
