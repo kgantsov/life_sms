@@ -21,7 +21,9 @@ Usage:
 Sending single message
 
     from life_sms import LifeSms
+
     sms = LifeSms('login', 'password', 'AlphaName')
+
     status = sms.send(u'Message test', '0981112233')
 
 
