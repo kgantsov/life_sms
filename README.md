@@ -7,22 +7,16 @@ Life Bulk Messaging Solution library
 Requirements
 ============
 
-* `Requests <http://docs.python-requests.org/>`
+* `Requests <http://docs.python-requests.org/>`_
 
 
 Usage:
 ======
-Import:
+
+Sending single message
 
     from life_sms import LifeSms
-
-Initialize:
-
     sms = LifeSms('login', 'password', 'AlphaName')
-
-
-Send one message:
-
     status = sms.send(u'Message test', '0981112233')
   
 
