@@ -196,7 +196,7 @@ class LifeSmsTests(unittest.TestCase):
 
         status = self.sms.send_individual(
             ['Hello Fill', 'Hello Jhon', 'Hello Kevin'],
-            ['0981233232', '0671234343'],
+            ['0981233232', '0671234343', '0671239898'],
             uniq_key='12345'
         )
 
