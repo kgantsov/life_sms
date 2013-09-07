@@ -180,7 +180,11 @@ class LifeSms(object):
             for item in response_xml:
                 status[item.tag] = item.text
 
-        status['date'] = response_xml.attrib['date']
+        if 'error' in response_xml.attrib:
+            status['error'] = response_xml.attrib['error']
+
+        if 'date' in response_xml.attrib:
+            status['date'] = response_xml.attrib['date']
 
         return status
 
@@ -202,5 +206,4 @@ class LifeSms(object):
             raise exceptions.HttpException(
                 "Error connecting to life sms server: %s" % error
             )
-
         return response
