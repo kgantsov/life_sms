@@ -15,7 +15,9 @@ Install
 Requirements
 ============
 
+* `Python <http://www.python.org/>`_ 2.7 or 3.3
 * `Requests <http://docs.python-requests.org/>`_
+* `lxml <http://lxml.de/>`_ 
 
 
 Usage:
