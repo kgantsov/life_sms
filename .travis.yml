@@ -4,4 +4,8 @@ python:
  - "3.3"
 install:
  - "pip install -r requirements.txt"
-script: "discover"
+ - "pip install coveralls"
+script:
+ - coverage run --source=life_sms,discover
+after_success:
+  - coveralls
