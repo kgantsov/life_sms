@@ -3,9 +3,9 @@ python:
  - "2.7"
  - "3.3"
 install:
- - "pip install -r requirements.txt"
  - "pip install coveralls"
+ - "pip install -r requirements.txt"
 script:
- - coverage run --source=life_sms,discover
+ - "coverage run --source=life_sms,discover"
 after_success:
   - coveralls
