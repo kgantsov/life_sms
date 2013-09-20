@@ -4,6 +4,12 @@ life_sms
 .. image:: https://travis-ci.org/kgantsov/life_sms.png?branch=master
     :target: https://travis-ci.org/kgantsov/life_sms
 
+
+.. image:: https://coveralls.io/repos/kgantsov/life_sms/badge.png
+  :target: https://coveralls.io/r/kgantsov/life_sms
+
+
+
 Life Bulk Messaging Solution library
 
 Install
