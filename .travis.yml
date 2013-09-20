@@ -6,6 +6,6 @@ install:
  - "pip install coveralls"
  - "pip install -r requirements.txt"
 script:
- - "coverage run --source=life_sms,discover"
+ - "coverage run tests.py, discover"
 after_success:
   - coveralls
